@@ -8,5 +8,6 @@ namespace ProAgil.API.model
 				public string Theme { get; set; }
 				public int PeopleAmount { get; set; }
 				public string Lot { get; set; }
+				public string ImageUrl { get; set; }
     }
 }
