@@ -1,3 +1,3 @@
 #ProAgil
 
-- I am learning dotnetCore and C# with ProAgil project and Angular.
+- I am learning dotnetCore, C# and Angular with ProAgil project.
