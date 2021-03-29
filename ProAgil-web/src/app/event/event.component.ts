@@ -22,8 +22,7 @@ interface Event {
 export class EventComponent implements OnInit {
 
   private apiUrl: string = API_URL_DEVELOP;
-  // tslint:disable-next-line: variable-name
-  _eventsFilter: string = '';
+  private _eventsFilter: string = '';
   public apiUrlImages: string = API_URL_DEVELOP_IMAGES;
   public imageWidth: number = 60;
   public imageMargin: number = 10;
