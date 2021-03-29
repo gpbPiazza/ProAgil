@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {URLS_DEVELOPMENT} from '../../config/constants';
+import {API_URL_DEVELOP_IMAGES, API_URL_DEVELOP} from '../../config/constants';
 
 interface Event {
   eventId: number;
@@ -20,19 +20,49 @@ interface Event {
 })
 
 export class EventComponent implements OnInit {
-    events: any;
-    private apiUrl = 'http://localhost:5000/api';
 
-    constructor(private http: HttpClient) { }
+  private apiUrl: string = API_URL_DEVELOP;
+  // tslint:disable-next-line: variable-name
+  _eventsFilter: string = '';
+  public apiUrlImages: string = API_URL_DEVELOP_IMAGES;
+  public imageWidth: number = 60;
+  public imageMargin: number = 10;
+  public showImage: boolean = false;
+  public events: any;
+  public eventsFiltered: Event[] = [];
 
-    ngOnInit(): void {
-      this.getEvents();
-    }
+  constructor(private http: HttpClient) { }
+  ngOnInit(): void {
+    this.getEvents();
+  }
 
-    getEvents(): void {
-      this.http.get<Event[]>(this.apiUrl).subscribe(
-        response => this.events = response,
-        error => console.log(error)
-      );
-    }
+  toggleShowImage(): void {
+    this.showImage = !this.showImage;
+  }
+
+  getEvents(): void {
+    this.http.get<Event[]>(this.apiUrl).subscribe(
+      response => {
+        this.eventsFiltered = response;
+        this.events = response;
+      },
+      error => console.log(error)
+    );
+  }
+
+  get eventsFilter(): string {
+    return this._eventsFilter;
+  }
+
+  set eventsFilter(theme: string) {
+    this._eventsFilter = theme;
+    this.eventsFiltered = this._eventsFilter ? this.filterEvents(this._eventsFilter) : this.events;
+  }
+
+  filterEvents(filterBy: string): Event {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.events.filter(
+      (event: { theme: string; }) => event.theme.toLocaleLowerCase().indexOf(filterBy) !== -1
+    );
+  }
 }

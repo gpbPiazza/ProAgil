@@ -1,4 +1,3 @@
-export const URLS_DEVELOPMENT: String = 'http://localhost:5000/api';
+export const API_URL_DEVELOP: string = 'http://localhost:5000/api/v1';
 
-const API_VERSION: String = '/api/v1';
-
+export const   API_URL_DEVELOP_IMAGES: string = 'http://localhost:5000/img/';

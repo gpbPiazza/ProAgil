@@ -1,13 +1,22 @@
-<form class="form-inline">
+<div class="form-inline">
 	<div class="form-group mb-2">
-		<input type="text" class="form-control mr-2" placeholder="Search">	
-		<button  class="btn tbn-outline-success" >Search</button>
+		<input type="text" 
+		class="form-control mr-2" 
+		placeholder="Search by theme" 
+		[(ngModel)]="eventsFilter"
+		>	
 	</div>
-</form>
+</div>
+<h3>Filter by: {{eventsFilter}}</h3>
 <table class="table table-striped">
 	<thead class="thead-dark">
 		<tr>
 			<th>#</th>
+			<th>
+				<button class="btn btn-outline-secondary" (click)="toggleShowImage()" >
+					Show Image
+				</button>
+			</th>
 			<th>Theme</th>
 			<th>Place</th>
 			<th>Date</th>
@@ -16,14 +25,22 @@
 			<th>Options</th>
 		</tr>
 	</thead>
-	<tbody *ngIf='events && events.length'>
-		<tr  *ngFor="let event of events">
+	<tbody *ngIf='events && events.length' >
+		<tr  *ngFor="let event of eventsFiltered">
 			<td>{{event.eventId}}</td>
+			<td>		
+				<img
+					*ngIf="showImage"
+					src="{{apiUrlImages}}/{{event.imageUrl}}"  
+					[style.width.px]="imageWidth"
+					[style.margin.px]="imageMargin"
+				/>
+			</td>
 			<td>{{event.theme}}</td>
 			<td>{{event.place}}</td>
 			<td>{{event.eventDate}}</td>
 			<td>{{event.peopleAmount}}</td>
-			<td>{{event.lot}}</td>
+			<td>{{event.lot | uppercase}}</td>
 			<td>
 				<button  class="btn btn-success">'</button>
 				<button  class="btn btn-danger">x</button>

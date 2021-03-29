@@ -6,17 +6,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventComponent } from './event/event.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     EventComponent,
-      NavigationComponent
-   ],
+    NavigationComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

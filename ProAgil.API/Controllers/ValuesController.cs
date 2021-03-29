@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace ProAgil.API.Controllers
 {
 	[ApiController]
-	[Route("/api")]
+	[Route("/api/v1")]
 	public class ValuesController : ControllerBase
 	{
 		public readonly DataContext Context;
