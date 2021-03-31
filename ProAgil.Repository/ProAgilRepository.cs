@@ -12,6 +12,7 @@ namespace ProAgil.Repository
 		public ProAgilRepository(ProAgilContext context)
 		{
 			this.context = context;
+			this.context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 		}
 
 

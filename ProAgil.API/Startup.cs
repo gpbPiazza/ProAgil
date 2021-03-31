@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ProAgil.Repository.Data;
+using ProAgil.Repository;
 
 namespace ProAgil.API
 {
@@ -22,6 +23,7 @@ namespace ProAgil.API
 			services.AddDbContext<ProAgilContext>(
 				client => client.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
 			);
+			services.AddScoped<IProAgilRepository, ProAgilRepository>();
 			services.AddControllers();
 			services.AddCors();
 		}
