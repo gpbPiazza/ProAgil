@@ -15,7 +15,6 @@ namespace ProAgil.Domain
 		public string Email {get; set; }
 		public string ImageUrl { get; set; }
 		public List<SocialMedia> SocialMedias { get; set; }
-
 		public List<EventSpeaker> EventSpeakers { get; set; }
 	}
 }

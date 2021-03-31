@@ -10,7 +10,6 @@ namespace ProAgil.Domain
 		public string ImageUrl { get; set; }
 		public decimal Price { get; set; }
 		public List<SocialMedia> SocialMedias { get; set; }
-
-		
+		public List<EventSpeaker> EventSpeakers { get; set; }
 	}
 }
