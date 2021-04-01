@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { EventComponent } from './event/event.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FormsModule } from '@angular/forms';
+import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     EventComponent,
-    NavigationComponent
+    NavigationComponent,
+    DateTimeFormatPipePipe
   ],
   imports: [
     BrowserModule,
