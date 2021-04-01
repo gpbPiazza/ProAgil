@@ -56,11 +56,11 @@ namespace ProAgil.Tests
 				.Returns(Task.FromResult(eventsMock));
 			//Act
 			var result = await this.controllerToBeTested.Get();
-
+			
 			//Assert
-			var test =  Assert.IsType<OkObjectResult>(result);
-			var arrayEvents = Assert.IsType<Event[]>(test.Value);
-			Assert.Equal(2, arrayEvents.Length);
+			var okResult =  Assert.IsType<OkObjectResult>(result);
+			var mockValue = Assert.IsType<Event[]>(okResult.Value);
+			Assert.Equal(2, mockValue.Length);
 		}
 	}
 }
