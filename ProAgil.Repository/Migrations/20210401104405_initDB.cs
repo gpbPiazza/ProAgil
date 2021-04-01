@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProAgil.Repository.Migrations
 {
-    public partial class init : Migration
+    public partial class initDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,9 +33,10 @@ namespace ProAgil.Repository.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
-                    CurriculumVitae = table.Column<decimal>(nullable: false),
+                    CurriculumVitae = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false)
+                    Email = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

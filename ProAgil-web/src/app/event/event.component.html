@@ -27,7 +27,7 @@
 	</thead>
 	<tbody *ngIf='events && events.length' >
 		<tr  *ngFor="let event of eventsFiltered">
-			<td>{{event.eventId}}</td>
+			<td>{{event.id}}</td>
 			<td>		
 				<img
 					*ngIf="showImage"

@@ -1,18 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import {API_URL_DEVELOP_IMAGES, API_URL_DEVELOP} from '../../config/constants';
-
-interface Event {
-  eventId: number;
-  place: string;
-  eventDate: string;
-  theme: string;
-  peopleAmount: number;
-  lot: string;
-  imageUrl: string;
-}
-
+import {API_URL_DEVELOP_IMAGES, API_URL_DEVELOP} from '../config/constants';
+import { EventService } from '../services/event.service';
+import {Event} from '../models/Event';
 @Component({
     selector: 'app-event',
     templateUrl: './event.component.html',
@@ -27,10 +16,11 @@ export class EventComponent implements OnInit {
   public imageWidth: number = 60;
   public imageMargin: number = 10;
   public showImage: boolean = false;
-  public events: any;
+  public events: Event[] = [];
   public eventsFiltered: Event[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private eventService: EventService) { }
+
   ngOnInit(): void {
     this.getEvents();
   }
@@ -39,9 +29,9 @@ export class EventComponent implements OnInit {
     this.showImage = !this.showImage;
   }
 
-  getEvents(): void {
-    this.http.get<Event[]>(this.apiUrl).subscribe(
-      response => {
+  getEvents(){
+    this.eventService.getEvents().subscribe(
+      (response: Event[] | any) => {
         this.eventsFiltered = response;
         this.events = response;
       },
@@ -58,7 +48,7 @@ export class EventComponent implements OnInit {
     this.eventsFiltered = this._eventsFilter ? this.filterEvents(this._eventsFilter) : this.events;
   }
 
-  filterEvents(filterBy: string): Event {
+  filterEvents(filterBy: string): Event[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.events.filter(
       (event: { theme: string; }) => event.theme.toLocaleLowerCase().indexOf(filterBy) !== -1
