@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EventComponent } from './event/event.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BsDropdownModule.forRoot(),
     FormsModule
   ],
   providers: [],
