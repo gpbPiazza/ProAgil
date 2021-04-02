@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProAgil.API", "ProAgil.API\ProAgil.API.csproj", "{A2AA977D-C6AF-4B06-A81F-7B8CCF88041B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProAgil.API", "ProAgil.API\ProAgil.API.csproj", "{A2AA977D-C6AF-4B06-A81F-7B8CCF88041B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProAgil.Repository", "ProAgil.Repository\ProAgil.Repository.csproj", "{D6890E9F-4FE1-46B8-AE84-F23C9F29DA5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProAgil.Repository", "ProAgil.Repository\ProAgil.Repository.csproj", "{D6890E9F-4FE1-46B8-AE84-F23C9F29DA5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProAgil.Domain", "ProAgil.Domain\ProAgil.Domain.csproj", "{43F96AA9-5D33-47F8-B4E1-C22BFA0D9FDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProAgil.Domain", "ProAgil.Domain\ProAgil.Domain.csproj", "{43F96AA9-5D33-47F8-B4E1-C22BFA0D9FDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProAgil.Tests", "ProAgil.Tests\ProAgil.Tests.csproj", "{D0A60573-59AB-4ED0-85C4-E965427BD011}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProAgil.Tests", "ProAgil.Tests\ProAgil.Tests.csproj", "{D0A60573-59AB-4ED0-85C4-E965427BD011}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A2AA977D-C6AF-4B06-A81F-7B8CCF88041B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +69,11 @@ Global
 		{D0A60573-59AB-4ED0-85C4-E965427BD011}.Release|x64.Build.0 = Release|Any CPU
 		{D0A60573-59AB-4ED0-85C4-E965427BD011}.Release|x86.ActiveCfg = Release|Any CPU
 		{D0A60573-59AB-4ED0-85C4-E965427BD011}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D522EBF-E56F-4FA6-964E-32115FE3ECA8}
 	EndGlobalSection
 EndGlobal

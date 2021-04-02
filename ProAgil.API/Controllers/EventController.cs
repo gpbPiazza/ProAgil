@@ -23,7 +23,7 @@ namespace ProAgil.API.Controllers
 		{
 			try
 			{
-				var events = await this.repository.GetAllEventAsync(true);
+				var events = await repository.GetAllEventAsync(true);
 				return Ok(events);
 			}
 			catch (System.Exception)
@@ -38,7 +38,7 @@ namespace ProAgil.API.Controllers
 			try 
 			{
 				var Event = await this.repository.GetEventAsyncById(EventId, true);
-				if(Event == null) return this.StatusCode(StatusCodes.Status404NotFound);
+				if(Event == null) return NotFound();
 				return Ok(Event);
 			}
 			catch (System.Exception)
@@ -77,7 +77,7 @@ namespace ProAgil.API.Controllers
 			{
 				return this.StatusCode(StatusCodes.Status500InternalServerError, "Data base ERROR");
 			}
-			return this.StatusCode(StatusCodes.Status400BadRequest);
+			return BadRequest();
 		}
 
 		[HttpPut("{EventId}")]
@@ -86,7 +86,7 @@ namespace ProAgil.API.Controllers
 			try
 			{
 				Event Event = await this.repository.GetEventAsyncById(EventId, false);
-				if(Event == null) return this.StatusCode(StatusCodes.Status404NotFound);
+				if(Event == null) return NotFound();
 
 				this.repository.Update(EventToUpdate);
 				bool isEventUpdated = await this.repository.SaveChangesAsync();
@@ -99,7 +99,7 @@ namespace ProAgil.API.Controllers
 			{
 				return this.StatusCode(StatusCodes.Status500InternalServerError, "Data base ERROR");
 			}
-			return this.StatusCode(StatusCodes.Status400BadRequest);
+			return BadRequest();
 		}	
 
 		[HttpDelete("{EventId}")]
@@ -108,7 +108,7 @@ namespace ProAgil.API.Controllers
 			try
 			{
 				Event Event = await this.repository.GetEventAsyncById(EventId, false);
-				if(Event == null) return this.StatusCode(StatusCodes.Status404NotFound);
+				if (Event == null) return NotFound();
 
 				this.repository.Delete(Event);
 				bool isEventDeleted = await this.repository.SaveChangesAsync();
