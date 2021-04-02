@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {API_URL_DEVELOP_IMAGES, API_URL_DEVELOP} from '../config/constants';
 import { EventService } from '../services/event.service';
 import {Event} from '../models/Event';
+
 @Component({
     selector: 'app-event',
     templateUrl: './event.component.html',
@@ -16,17 +17,24 @@ export class EventComponent implements OnInit {
   public imageWidth: number = 60;
   public imageMargin: number = 10;
   public showImage: boolean = false;
+  public loading: boolean = false;
   public events: Event[] = [];
   public eventsFiltered: Event[] = [];
 
   constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
+    this.toggleLoading();
     this.getEvents();
+    this.toggleLoading();
   }
 
   toggleShowImage(): void {
     this.showImage = !this.showImage;
+  }
+
+  toggleLoading(): void {
+    this.loading = !this.loading;
   }
 
   getEvents(){

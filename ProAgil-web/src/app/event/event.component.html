@@ -2,12 +2,11 @@
 	<div class="form-group mb-2">
 		<input type="text" 
 		class="form-control mr-2" 
-		placeholder="Search by theme" 
+		placeholder="Filter by theme" 
 		[(ngModel)]="eventsFilter"
 		>	
 	</div>
 </div>
-<h3>Filter by: {{eventsFilter}}</h3>
 <table class="table table-striped">
 	<thead class="thead-dark">
 		<tr>
@@ -50,12 +49,27 @@
 				</div>
 			</td>
 			<td>
-				<button  class="btn btn-success">'</button>
-				<button  class="btn btn-danger">x</button>
+				<div class="btn-group">
+					<button  class="btn btn-sm btn-primary" tooltip="Editar" >
+						<i class="fa fa-edit"></i>
+					</button>
+					<button  class="btn btn-sm btn-danger" tooltip="Excluir" >
+						<i class="fa fa-eraser"></i>
+					</button>
+				</div>
 			</td>
 		</tr>
 	</tbody>
-	<tfoot *ngIf="!events.length">
+	<tfoot *ngIf="loading">
+		<tr>
+			<td colspan="7" class="text-center">
+				<span class="spinner-border" role="status">
+				</span>
+				<span style="margin-left: 1rem;" >Loading...</span>
+			</td>
+		</tr>
+	</tfoot>
+	<tfoot *ngIf="!events.length && !loading">
 		<tr>
 			<td colspan="7" class="text-center">
 				<h3>Events not found :(</h3>

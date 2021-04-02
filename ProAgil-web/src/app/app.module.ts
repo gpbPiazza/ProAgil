@@ -8,6 +8,8 @@ import { EventComponent } from './event/event.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {TooltipModule} from 'ngx-bootstrap/tooltip';
+import { ModalModule} from 'ngx-bootstrap/modal';
 import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
 
 @NgModule({
@@ -22,6 +24,8 @@ import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
     AppRoutingModule,
     HttpClientModule,
     BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
     FormsModule
   ],
   providers: [],
