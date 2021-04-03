@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import {API_URL_DEVELOP_IMAGES, API_URL_DEVELOP} from '../config/constants';
 import { EventService } from '../services/event.service';
 import {Event} from '../models/Event';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'app-event',
@@ -20,13 +21,15 @@ export class EventComponent implements OnInit {
   public loading: boolean = false;
   public events: Event[] = [];
   public eventsFiltered: Event[] = [];
+  public modalRef!: BsModalRef;
 
-  constructor(private eventService: EventService) { }
+  constructor(
+    private eventService: EventService,
+    private modalService: BsModalService
+    ) { }
 
   ngOnInit(): void {
-    this.toggleLoading();
     this.getEvents();
-    this.toggleLoading();
   }
 
   toggleShowImage(): void {
@@ -38,6 +41,7 @@ export class EventComponent implements OnInit {
   }
 
   getEvents(){
+    this.toggleLoading();
     this.eventService.getEvents().subscribe(
       (response: Event[] | any) => {
         this.eventsFiltered = response;
@@ -45,6 +49,11 @@ export class EventComponent implements OnInit {
       },
       error => console.log(error)
     );
+    this.toggleLoading();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   get eventsFilter(): string {
