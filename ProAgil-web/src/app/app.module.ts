@@ -8,12 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventComponent } from './event/event.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import { ModalModule} from 'ngx-bootstrap/modal';
 import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
-import { AnimationBuilder } from '@angular/animations';
+import { NgxMaskModule } from 'ngx-mask';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { AnimationBuilder } from '@angular/animations';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    NgxMaskModule.forRoot(),
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     FormsModule
   ],
   providers: [],
