@@ -81,18 +81,26 @@ namespace ProAgil.API.Controllers
 		}
 
 		[HttpPut("{EventId}")]
-		public async Task<IActionResult> Put(int EventId, Event EventToUpdate)
+		public async Task<IActionResult> Put(int EventId, Event model)
 		{
 			try
 			{
 				Event Event = await this.repository.GetEventAsyncById(EventId, false);
 				if(Event == null) return NotFound();
 
-				this.repository.Update(EventToUpdate);
+				if (model.Email is string) Event.Email = model.Email;
+				if (model.Place is string) Event.Place = model.Place;
+				if (model.EventDate != null) Event.EventDate = model.EventDate;
+				if (model.Theme is string) 	Event.Theme = model.Theme;
+				Event.PeopleAmount = model.PeopleAmount;
+				if (model.ImageUrl is string) Event.ImageUrl = model.ImageUrl;
+				if (model.PhoneNumber != null) Event.PhoneNumber = model.PhoneNumber;
+				
+				this.repository.Update(Event);
 				bool isEventUpdated = await this.repository.SaveChangesAsync();
 				if(isEventUpdated)
 				{
-					return Created($"/api/event/{EventToUpdate.Id}", EventToUpdate);
+					return Created($"/api/event/{Event.Id}", Event);
 				}
 			}
 			catch  (System.Exception) 
@@ -114,7 +122,7 @@ namespace ProAgil.API.Controllers
 				bool isEventDeleted = await this.repository.SaveChangesAsync();
 				if(isEventDeleted)
 				{
-					return Ok("Event deleted");
+					return this.StatusCode(StatusCodes.Status200OK);
 				}
 			}
 			catch(System.Exception) 

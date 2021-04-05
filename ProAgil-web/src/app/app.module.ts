@@ -14,6 +14,7 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import { ModalModule} from 'ngx-bootstrap/modal';
 import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
 import { NgxMaskModule } from 'ngx-mask';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { NgxMaskModule } from 'ngx-mask';
     HttpClientModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
     NgxMaskModule.forRoot(),
     BrowserAnimationsModule,
