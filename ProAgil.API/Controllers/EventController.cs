@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProAgil.API.DTO;
 using ProAgil.Domain;
 using ProAgil.Repository;
 
@@ -13,9 +15,14 @@ namespace ProAgil.API.Controllers
 	public class EventController : ControllerBase
 	{	
 		private readonly IProAgilRepository repository;
-		public EventController(IProAgilRepository repository)
+		private readonly IMapper mapper;
+		public EventController(
+			IProAgilRepository repository,
+			IMapper mapper
+		)
 		{
 			this.repository = repository;
+			this.mapper = mapper;
 		}
 
 		[HttpGet]
@@ -24,7 +31,8 @@ namespace ProAgil.API.Controllers
 			try
 			{
 				var events = await repository.GetAllEventAsync(true);
-				return Ok(events);
+				var results = this.mapper.Map<EventDTO[]>(events);
+				return Ok(results);
 			}
 			catch (System.Exception)
 			{
@@ -39,7 +47,9 @@ namespace ProAgil.API.Controllers
 			{
 				var Event = await this.repository.GetEventAsyncById(EventId, true);
 				if(Event == null) return NotFound();
-				return Ok(Event);
+
+				var results = this.mapper.Map<EventDTO>(Event);
+				return Ok(results);
 			}
 			catch (System.Exception)
 			{
@@ -53,7 +63,8 @@ namespace ProAgil.API.Controllers
 			try
 			{
 				var events = await this.repository.GetAllEventAsyncByTheme(theme, true);
-				return Ok(events);
+				var results = this.mapper.Map<EventDTO[]>(events);
+				return Ok(results);
 			}
 			catch (System.Exception)
 			{
@@ -62,45 +73,42 @@ namespace ProAgil.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(Event Event)
+		public async Task<IActionResult> Post(EventDTO model)
 		{
 			try
 			{	
+				var Event = this.mapper.Map<Event>(model); 
 				this.repository.Add(Event);
 				bool isEventRegistered = await this.repository.SaveChangesAsync();
 				if(isEventRegistered)
 				{
-					return Created($"/api/event/{Event.Id}", Event);
+					var result = this.mapper.Map<EventDTO>(Event);
+					return Created($"/api/event/{result.Id}", result);
 				}
 			}
-			catch  (System.Exception) 
+			catch  (System.Exception ex) 
 			{
-				return this.StatusCode(StatusCodes.Status500InternalServerError, "Data base ERROR");
+				return this.StatusCode(StatusCodes.Status500InternalServerError, $"Data base ERROR {ex}");
 			}
 			return BadRequest();
 		}
 
 		[HttpPut("{EventId}")]
-		public async Task<IActionResult> Put(int EventId, Event model)
+		public async Task<IActionResult> Put(int EventId, EventDTO model)
 		{
 			try
 			{
 				Event Event = await this.repository.GetEventAsyncById(EventId, false);
 				if(Event == null) return NotFound();
 
-				if (model.Email is string) Event.Email = model.Email;
-				if (model.Place is string) Event.Place = model.Place;
-				if (model.EventDate != null) Event.EventDate = model.EventDate;
-				if (model.Theme is string) 	Event.Theme = model.Theme;
-				Event.PeopleAmount = model.PeopleAmount;
-				if (model.ImageUrl is string) Event.ImageUrl = model.ImageUrl;
-				if (model.PhoneNumber != null) Event.PhoneNumber = model.PhoneNumber;
+				this.mapper.Map(model, Event);
 				
 				this.repository.Update(Event);
 				bool isEventUpdated = await this.repository.SaveChangesAsync();
 				if(isEventUpdated)
 				{
-					return Created($"/api/event/{Event.Id}", Event);
+					var result = this.mapper.Map<EventDTO>(Event);
+					return Created($"/api/event/{result.Id}", result);
 				}
 			}
 			catch  (System.Exception) 
