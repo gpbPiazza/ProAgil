@@ -7,6 +7,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { BsLocaleService} from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
+import { ToastrService } from 'ngx-toastr';
+
 defineLocale('pt-br', ptBrLocale);
 @Component({
     selector: 'app-event',
@@ -15,24 +17,6 @@ defineLocale('pt-br', ptBrLocale);
 })
 
 export class EventComponent implements OnInit {
-
-  constructor(
-    private eventService: EventService,
-    private modalService: BsModalService,
-    private formBuilder: FormBuilder,
-    private localService: BsLocaleService
-    ) {
-      this.localService.use('pt-br');
-    }
-
-  set eventsFilter(theme: string)  {
-    this._eventsFilter = theme;
-    this.eventsFiltered = this._eventsFilter ? this.filterEvents(this._eventsFilter) : this.events;
-  }
-
-  get  eventsFilter(): string  {
-    return this._eventsFilter;
-  }
 
   private _eventsFilter: string = '';
   public apiUrlImages: string = API_URL_DEVELOP_IMAGES;
@@ -47,12 +31,31 @@ export class EventComponent implements OnInit {
   public registerForm: FormGroup;
   public eventIdToEdit: number;
   public bodyDeleteEvent: string;
+  public eventDate: string;
   public isEditEventMode: boolean = false;
 
-  // tslint:disable-next-line: adjacent-overload-signatures
+  constructor(
+    private eventService: EventService,
+    private modalService: BsModalService,
+    private formBuilder: FormBuilder,
+    private localService: BsLocaleService,
+    private toastr: ToastrService
+    ) {
+      this.localService.use('pt-br');
+    }
+
   ngOnInit(): void {
     this.validation();
     this.getEvents();
+  }
+
+  set eventsFilter(theme: string)  {
+    this._eventsFilter = theme;
+    this.eventsFiltered = this._eventsFilter ? this.filterEvents(this._eventsFilter) : this.events;
+  }
+
+  get  eventsFilter(): string  {
+    return this._eventsFilter;
   }
 
   toggleShowImage(): void {
@@ -63,16 +66,20 @@ export class EventComponent implements OnInit {
     this.loading = !this.loading;
   }
 
+
   getEvents(){
     this.toggleLoading();
     this.eventService.getEvents().subscribe(
       (response: Event[] | any) => {
+        this.toggleLoading();
         this.eventsFiltered = response;
         this.events = response;
       },
-      error => console.log(error)
+      error => {
+        console.log(error);
+        this.toggleLoading();
+      }
     );
-    this.toggleLoading();
   }
 
   openModal(template: any) {
@@ -101,7 +108,7 @@ export class EventComponent implements OnInit {
       theme: ['', [required, minLength(4), maxLength(50)]],
       place: ['', required],
       eventDate: ['', required],
-      peopleAmount: ['', [required, max(12000)]],
+      peopleAmount: ['', [required, max(1200)]],
       imageUrl: ['', required],
       phoneNumber: ['', required],
       email: ['', [required, email]],
@@ -118,13 +125,16 @@ export class EventComponent implements OnInit {
 
   updateEvent(template: any) {
     if (this.registerForm.valid){
-      this.event = Object.assign({}, this.registerForm.value);
+      this.event = Object.assign({id: this.eventIdToEdit}, this.registerForm.value);
+      console.log(this.event);
       this.eventService.updateEvent(this.event, this.eventIdToEdit).subscribe(
         () => {
           template.hide();
           this.getEvents();
+          this.toastr.success('Event edited with success!');
         },
         errors => {
+          this.toastr.error(`Event not edited! ${errors.statusText}`);
           console.log(errors);
         }
       );
@@ -142,11 +152,13 @@ export class EventComponent implements OnInit {
     console.log(this.event.id);
     this.eventService.deleteEventById(this.event.id).subscribe(
       () => {
+        this.toastr.success(`Event deleted with success!`);
         template.hide();
         this.getEvents();
       },
       errors => {
-        console.log(errors, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+        this.toastr.error(`Event not deleted! ${errors.errors}`);
+        console.log(errors);
       });
   }
 
@@ -154,11 +166,13 @@ export class EventComponent implements OnInit {
     if (this.registerForm.valid){
       this.event = Object.assign({}, this.registerForm.value);
       this.eventService.postEvent(this.event).subscribe(
-        newEvent => {
+        () => {
+          this.toastr.success(`Event regitered with success!`);
           template.hide();
           this.getEvents();
         },
         errors => {
+          this.toastr.error(`Event not registered! ${errors.errors}`);
           console.log(errors);
         }
       );

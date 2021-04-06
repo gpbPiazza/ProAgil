@@ -94,11 +94,11 @@ namespace ProAgil.API.Controllers
 		}
 
 		[HttpPut("{EventId}")]
-		public async Task<IActionResult> Put(int EventId, EventDTO model)
+		public async Task<IActionResult> Put(int eventId, EventDTO model)
 		{
 			try
 			{
-				Event Event = await this.repository.GetEventAsyncById(EventId, false);
+				Event Event = await this.repository.GetEventAsyncById(eventId, false);
 				if(Event == null) return NotFound();
 
 				this.mapper.Map(model, Event);
