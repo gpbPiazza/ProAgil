@@ -19,6 +19,7 @@ defineLocale('pt-br', ptBrLocale);
 export class EventComponent implements OnInit {
 
   private _eventsFilter: string = '';
+	title: string =  'Events';
   public apiUrlImages: string = API_URL_DEVELOP_IMAGES;
   public imageWidth: number = 60;
   public imageMargin: number = 10;
