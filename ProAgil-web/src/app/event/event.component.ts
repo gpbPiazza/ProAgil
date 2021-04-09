@@ -19,7 +19,7 @@ defineLocale('pt-br', ptBrLocale);
 export class EventComponent implements OnInit {
 
   private _eventsFilter: string = '';
-	title: string =  'Events';
+  title: string =  'Events';
   public apiUrlImages: string = API_URL_DEVELOP_IMAGES;
   public imageWidth: number = 60;
   public imageMargin: number = 10;
@@ -34,6 +34,7 @@ export class EventComponent implements OnInit {
   public bodyDeleteEvent: string;
   public eventDate: string;
   public isEditEventMode: boolean = false;
+  public file: File;
 
   constructor(
     private eventService: EventService,
@@ -124,10 +125,17 @@ export class EventComponent implements OnInit {
     }
   }
 
+  uploadImageEvent() {
+    const fileImageName = this.event.imageUrl.split('\\', 3)[2];
+    this.event.imageUrl = fileImageName;
+    this.eventService.postUpload(this.file, fileImageName).subscribe();
+  }
+
   updateEvent(template: any) {
     if (this.registerForm.valid){
       this.event = Object.assign({id: this.eventIdToEdit}, this.registerForm.value);
       console.log(this.event);
+      this.uploadImageEvent();
       this.eventService.updateEvent(this.event, this.eventIdToEdit).subscribe(
         () => {
           template.hide();
@@ -166,8 +174,10 @@ export class EventComponent implements OnInit {
   registerEvent(template: any) {
     if (this.registerForm.valid){
       this.event = Object.assign({}, this.registerForm.value);
+      this.uploadImageEvent();
       this.eventService.postEvent(this.event).subscribe(
         () => {
+          this.uploadImageEvent();
           this.toastr.success(`Event regitered with success!`);
           template.hide();
           this.getEvents();
@@ -196,5 +206,13 @@ export class EventComponent implements OnInit {
     return this.events.filter(
       (event: { theme: string; }) => event.theme.toLocaleLowerCase().indexOf(filterBy) !== -1
     );
+  }
+
+  onFileChange(event: any) {
+    const {target} = event;
+    if (target.files && target.files.length){
+      console.log(target.files);
+      this.file = target.files;
+    }
   }
 }

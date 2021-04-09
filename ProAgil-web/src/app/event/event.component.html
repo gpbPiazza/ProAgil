@@ -178,16 +178,27 @@
 						</div>
 						<div class="form-group col-md-9">
 							<label>Image</label>
-							<input  placeholder="Event image"  type="text" class="form-control is-invalid" formControlName="imageUrl"
-								[ngClass]="{
-									'is-invalid': 
-										registerForm.get('imageUrl')?.errors &&
-										registerForm.get('imageUrl')?.touched,
-									'is-valid':
-										!registerForm.get('imageUrl')?.errors &&
-										registerForm.get('imageUrl')?.touched
-								}"
-							>
+							<table>
+								<tr>
+									<button class="btn btn-success" (click)="file.click()">Enviar imagem</button>
+									<input  
+										style="display: none;"
+										type="file" 
+										#file 
+										class="form-control is-invalid" 
+										formControlName="imageUrl"
+										(change)="onFileChange($event)"
+										[ngClass]="{
+											'is-invalid': 
+												registerForm.get('imageUrl')?.errors &&
+												registerForm.get('imageUrl')?.touched,
+											'is-valid':
+												!registerForm.get('imageUrl')?.errors &&
+												registerForm.get('imageUrl')?.touched
+										}"
+									>
+								</tr>
+							</table>
 							<div class="invalid-feedback">Event image is required</div>
 						</div>
 					</div>  
